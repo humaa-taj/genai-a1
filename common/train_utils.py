@@ -40,7 +40,7 @@ def train_ae(cfg, tl, vl, epochs, trial=None, save=None):
     return best
 
 def run_study(name, objective, n_trials, direction="minimize"):
-    mlflow.set_tracking_uri("file:./mlruns"); mlflow.set_experiment(name)
+    mlflow.set_tracking_uri("sqlite:///mlflow.db"); mlflow.set_experiment(name)
     study = optuna.create_study(study_name=name, storage="sqlite:///optuna.db", load_if_exists=True,
                                 direction=direction, sampler=optuna.samplers.TPESampler(seed=42),
                                 pruner=optuna.pruners.MedianPruner(n_startup_trials=5, n_warmup_steps=3))
