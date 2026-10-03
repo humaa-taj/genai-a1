@@ -16,7 +16,8 @@ def objective(t):
         return train_ae(cfg, tl, vl, 10, trial=t)
 
 if __name__ == "__main__":
-    s = run_study("task2_specialists_shared", objective, 25); best = {**s.best_params, "dropout": 0.1}
+    s = run_study("task2_specialists_shared", objective, 25)
+    best = s.best_params
     mlflow.set_experiment("task2_specialists")
     for k in SPEC:                                  # independent parameters, own corruption only
         with mlflow.start_run(run_name=f"specialist_{k}"):
