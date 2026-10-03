@@ -3,12 +3,11 @@ from common.data import load_split, make_loaders
 from common.train_utils import *
 
 tr, va, _ = load_split(); vm = json.load(open("data/val_manifest.json"))
-TRIAL_EPOCHS, FINAL_EPOCHS, N_TRIALS = 10, 100, 30
-
+TRIAL_EPOCHS, FINAL_EPOCHS, N_TRIALS = 12, 100, 40
 def cfg_from(t):
     return dict(lr=t.suggest_float("lr", 1e-4, 3e-3, log=True), bs=t.suggest_categorical("bs", [32, 64, 128]),
-                latent=t.suggest_categorical("latent", [128, 256, 512, 1024]),
-                base=t.suggest_categorical("base", [16, 32, 48, 64]),
+                latent=t.suggest_categorical("latent", [128, 256, 512]),
+                base=t.suggest_categorical("base", [16, 32, 48]),
                 dropout=t.suggest_float("dropout", 0.0, 0.3), alpha=t.suggest_float("alpha", 0.5, 0.95))
 
 def objective(t):

@@ -6,8 +6,9 @@ SPEC = ["salt", "blur", "occlusion"]
 
 def objective(t):
     cfg = dict(lr=t.suggest_float("lr", 1e-4, 3e-3, log=True), bs=t.suggest_categorical("bs", [32, 64, 128]),
-               latent=t.suggest_categorical("latent", [128, 256, 512, 1024]),
-               base=t.suggest_categorical("base", [16, 32, 48, 64]), dropout=0.1,
+                latent=t.suggest_categorical("latent", [128, 256, 512]),
+                base=t.suggest_categorical("base", [16, 32, 48]),
+                dropout=t.suggest_float("dropout", 0.0, 0.3),
                alpha=t.suggest_float("alpha", 0.5, 0.95))
     with mlflow.start_run(run_name=f"trial_{t.number}", nested=True):
         mlflow.log_params(t.params)
